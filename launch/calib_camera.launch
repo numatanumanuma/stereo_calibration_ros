@@ -1,0 +1,18 @@
+<launch>
+     <node name="camera_calibrator" pkg ="camera_calibration" type="cameracalibrator.py"
+        args = "--pattern=circles --size 13x9 --square 0.09">
+        <remap from="left" to="/left_image" />
+        <remap from="right" to="/right_image"/>
+        <!-- <remap from="left_camera" to="left_camera"/>
+        <remap from="right_camera" to="right_camera"/> -->
+    </node>
+    
+    <node name="calib_image_sender" pkg="stereo_calibration_ros" type="calib_image_sender" output="screen" >
+		<param name="image_width" value="1920" />
+		<param name="image_height" value="1080" />
+		<param name="camera_topic_left" value="/left_image" />
+		<param name="camera_topic_right" value="/right_image" />
+		<param name="device_num_left" value="3" />
+		<param name="device_num_right" value="2" />
+	</node>
+</launch>
